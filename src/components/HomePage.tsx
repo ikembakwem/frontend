@@ -1,5 +1,7 @@
 // Dependencies
 import React, { useEffect, useState } from 'react';
+
+// Data
 import { getUnansweredQuestions, QuestionData } from '../QuestionsData';
 
 // Components
