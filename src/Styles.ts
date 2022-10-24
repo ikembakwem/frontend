@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 // Colors
 export const gray1 = '#383737';
 export const gray2 = '#5c5a5a';
@@ -15,3 +17,27 @@ export const fontFamily = "'Segoe UI', 'Helvetica Neue', sans-serif";
 
 // Font Size
 export const fontSize = '16px';
+
+export const PrimaryButton = styled.button`
+  background-color: ${primary2};
+  border-color: ${primary2};
+  border-style: solid;
+  border-radius: 5px;
+  font-family: ${fontFamily};
+  font-size: ${fontSize};
+  padding: 5px 10px;
+  color: #fff;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${primary1};
+  }
+  :focus {
+    outline-color: ${primary2};
+  }
+
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
