@@ -1,9 +1,13 @@
+// Configuring emotion styles
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+
 // Dependencies
 import React, { ChangeEvent } from 'react';
-import styles from './Header.module.css';
 
 // Components
 import { FaUserAlt as UserIcon } from 'react-icons/fa';
+import { gray5 } from '../Styles';
 
 export const Header = () => {
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,7 +15,21 @@ export const Header = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      css={css`
+        position: fixed;
+        box-sizing: border-box;
+        top: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #fff;
+        border-bottom: 1px solid ${gray5};
+        box-shadow: 0 3px 7px 0 rgba(110, 112, 114, 0.21);
+      `}
+    >
       <a href="./">Q & A</a>
       <input
         type="text"

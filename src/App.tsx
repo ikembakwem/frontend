@@ -1,8 +1,12 @@
-// Dependencies
-import React from 'react';
+// Configuration for babel to transform css function into Javascript
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 
 // Styles
-import styles from './App.module.css';
+import { fontFamily, fontSize, gray2 } from './Styles';
+
+// Dependencies
+import React from 'react';
 
 // Components
 import { Header } from './components/Header';
@@ -10,7 +14,13 @@ import { HomePage } from './components/HomePage';
 
 function App() {
   return (
-    <div className={styles.container}>
+    <div
+      css={css`
+        font-family: ${fontFamily};
+        font-size: ${fontSize};
+        color: ${gray2};
+      `}
+    >
       <Header />
       <HomePage />
     </div>
