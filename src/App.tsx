@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Styles
-import './App.css';
+import styles from './App.module.css';
 
 // Components
 import { Header } from './components/Header';
@@ -10,7 +10,7 @@ import { HomePage } from './components/HomePage';
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.container}>
       <Header />
       <HomePage />
     </div>

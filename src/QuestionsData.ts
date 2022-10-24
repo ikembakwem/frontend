@@ -68,7 +68,8 @@ const questions: QuestionData[] = [
   {
     questionId: 3,
 
-    title: 'Which state management tool should I use?',
+    title:
+      'Which library should i use to store global states for my components?',
 
     content:
       'Typescript is great for making sure your code runs smoothly without the headache of debugging. How does one fully differentiates interface from types in typescript',
@@ -77,17 +78,7 @@ const questions: QuestionData[] = [
 
     created: new Date(),
 
-    answers: [
-      {
-        answerId: 1,
-
-        content: 'To catch problems earlier speeding up your developments',
-
-        userName: 'Jane',
-
-        created: new Date(),
-      },
-    ],
+    answers: [],
   },
 ];
 
