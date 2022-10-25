@@ -53,8 +53,8 @@ function App() {
           />
           <Route path="signin" element={<SignInPage />} />
           <Route path="search" element={<SearchPage />} />
-          <Route path="*" element={<NotFoundPage />} />
           <Route path="questions/:questionId" element={<QuestionPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </BrowserRouter>
