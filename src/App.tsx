@@ -8,13 +8,14 @@ import { fontFamily, fontSize, gray2 } from './Styles';
 // Dependencies
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// Components
+// Components and Pages
 import { AskPage } from './pages/AskPage';
 import { SignInPage } from './pages/SignInPage';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { SearchPage } from './pages/SearchPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { QuestionPage } from './pages/QuestionPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="signin" element={<SignInPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="questions/:questionId" element={<QuestionPage />} />
         </Routes>
       </div>
     </BrowserRouter>
