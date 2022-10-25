@@ -9,13 +9,15 @@ import { fontFamily, fontSize, gray2 } from './Styles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Components and Pages
-import { AskPage } from './pages/AskPage';
 import { SignInPage } from './pages/SignInPage';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { SearchPage } from './pages/SearchPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { QuestionPage } from './pages/QuestionPage';
+import React from 'react';
+// Implementing Lazy load on AskPage component
+const AskPage = React.lazy(() => import('./pages/AskPage'));
 
 function App() {
   return (
@@ -30,7 +32,25 @@ function App() {
         <Header />
         <Routes>
           <Route path="" element={<HomePage />} />
-          <Route path="ask" element={<AskPage />} />
+          <Route
+            path="ask"
+            element={
+              <React.Suspense
+                fallback={
+                  <div
+                    css={css`
+                      margin-top: 100px;
+                      text-align: center;
+                    `}
+                  >
+                    Loading...
+                  </div>
+                }
+              >
+                <AskPage />
+              </React.Suspense>
+            }
+          />
           <Route path="signin" element={<SignInPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="*" element={<NotFoundPage />} />
