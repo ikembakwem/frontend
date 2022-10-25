@@ -8,9 +8,9 @@ import React, { useEffect, useState } from 'react';
 import { getUnansweredQuestions, QuestionData } from '../QuestionsData';
 
 // Components
-import { QuestionList } from './QuestionList';
-import { Page } from './Page';
-import { PageTitle } from './PageTitle';
+import { QuestionList } from '../components/QuestionList';
+import { Page } from '../components/Page';
+import { PageTitle } from '../components/PageTitle';
 import { PrimaryButton } from '../Styles';
 
 export const HomePage = () => {
