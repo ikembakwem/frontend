@@ -7,6 +7,7 @@ import React, { ChangeEvent } from 'react';
 
 // Components
 import { FaUserAlt as UserIcon } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { fontFamily, fontSize, gray1, gray2, gray5 } from '../Styles';
 
 export const Header = () => {
@@ -30,8 +31,8 @@ export const Header = () => {
         box-shadow: 0 3px 7px 0 rgba(110, 112, 114, 0.21);
       `}
     >
-      <a
-        href="./"
+      <Link
+        to="/"
         css={css`
           font-size: 24px;
           font-weight: bold;
@@ -40,7 +41,7 @@ export const Header = () => {
         `}
       >
         Q & A
-      </a>
+      </Link>
       <input
         type="text"
         placeholder="Enter search..."
@@ -62,8 +63,8 @@ export const Header = () => {
           }
         `}
       />
-      <a
-        href="./signin"
+      <Link
+        to="signin"
         css={css`
           font-family: ${fontFamily};
           font-size: ${fontSize};
@@ -92,7 +93,7 @@ export const Header = () => {
           <UserIcon />
         </div>
         <span>Sign In</span>
-      </a>
+      </Link>
     </div>
   );
 };

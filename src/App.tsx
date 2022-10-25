@@ -14,6 +14,7 @@ import { SignInPage } from './pages/SignInPage';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { SearchPage } from './pages/SearchPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="ask" element={<AskPage />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </BrowserRouter>
