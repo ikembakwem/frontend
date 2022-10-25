@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getQuestion, QuestionData } from '../QuestionsData';
 import React, { useEffect, useState } from 'react';
 import { gray3, gray6 } from '../Styles';
+import { AnswerList } from '../components/AnswerList';
 
 export const QuestionPage = () => {
   const [question, setQuestion] = useState<QuestionData | null>(null);
@@ -64,6 +65,7 @@ export const QuestionPage = () => {
                 question.userName
               } on ${question.created.toLocaleDateString()} ${question.created.toLocaleTimeString()}`}
             </div>
+            <AnswerList data={question.answers} />
           </React.Fragment>
         )}
       </div>
