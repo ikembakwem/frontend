@@ -5,8 +5,22 @@ import { Page } from '../components/Page';
 import { useParams } from 'react-router-dom';
 import { getQuestion, QuestionData } from '../QuestionsData';
 import React, { useEffect, useState } from 'react';
-import { gray3, gray6 } from '../Styles';
+import {
+  FieldContainer,
+  FieldLabel,
+  Fieldset,
+  FieldTextArea,
+  FormButtonContainer,
+  gray3,
+  gray6,
+  PrimaryButton,
+} from '../Styles';
 import { AnswerList } from '../components/AnswerList';
+import { useForm } from 'react-hook-form';
+
+type FormData = {
+  content: string;
+};
 
 export const QuestionPage = () => {
   const [question, setQuestion] = useState<QuestionData | null>(null);
@@ -23,6 +37,8 @@ export const QuestionPage = () => {
       doGetQuestions(Number(questionId));
     }
   }, [questionId]);
+
+  const { register } = useForm<FormData>();
 
   return (
     <Page>
@@ -66,6 +82,23 @@ export const QuestionPage = () => {
               } on ${question.created.toLocaleDateString()} ${question.created.toLocaleTimeString()}`}
             </div>
             <AnswerList data={question.answers} />
+            <form
+              css={css`
+                margin-top: 20px;
+              `}
+            >
+              <Fieldset>
+                <FieldContainer>
+                  <FieldLabel htmlFor="content">Your Answer</FieldLabel>
+                  <FieldTextArea id="content" {...register('content')} />
+                </FieldContainer>
+                <FormButtonContainer>
+                  <PrimaryButton type="submit">
+                    Submit Your Answer
+                  </PrimaryButton>
+                </FormButtonContainer>
+              </Fieldset>
+            </form>
           </React.Fragment>
         )}
       </div>
