@@ -7,6 +7,7 @@ import { getQuestion, QuestionData } from '../QuestionsData';
 import React, { useEffect, useState } from 'react';
 import {
   FieldContainer,
+  FieldError,
   FieldLabel,
   Fieldset,
   FieldTextArea,
@@ -38,7 +39,10 @@ export const QuestionPage = () => {
     }
   }, [questionId]);
 
-  const { register } = useForm<FormData>();
+  const {
+    register,
+    formState: { errors },
+  } = useForm<FormData>({ mode: 'onBlur' });
 
   return (
     <Page>
@@ -90,7 +94,15 @@ export const QuestionPage = () => {
               <Fieldset>
                 <FieldContainer>
                   <FieldLabel htmlFor="content">Your Answer</FieldLabel>
-                  <FieldTextArea id="content" {...register('content')} />
+                  <FieldTextArea
+                    id="content"
+                    {...register('content', { required: true, minLength: 50 })}
+                  />
+                  {errors.content && errors.content.type === 'minLength' && (
+                    <FieldError>
+                      Answer must be at least 50 characters
+                    </FieldError>
+                  )}
                 </FieldContainer>
                 <FormButtonContainer>
                   <PrimaryButton type="submit">
