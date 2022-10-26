@@ -5,29 +5,42 @@ import { css } from '@emotion/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Data
+// CRUD functions and interface
 import { getUnansweredQuestions, QuestionData } from '../QuestionsData';
 
-// Components
+// Components and Styles
 import { QuestionList } from '../components/QuestionList';
 import { Page } from '../components/Page';
 import { PageTitle } from '../components/PageTitle';
 import { PrimaryButton } from '../Styles';
 
 export const HomePage = () => {
+  // Manage questions state
   const [questions, setQuestions] = useState<QuestionData[]>([]);
+
+  // Manage Question loading state
   const [questionsLoading, setQuestionsLoading] = useState(true);
 
   useEffect(() => {
     const doGetUnansweredQuestions = async () => {
+      // Call async CRUD function
       const unansweredQuestions = await getUnansweredQuestions();
+
+      // Update questions data
       setQuestions(unansweredQuestions);
+
+      // Update question loading state
       setQuestionsLoading(false);
     };
+
+    // Call the API
     doGetUnansweredQuestions();
   }, []);
 
+  // Assign useNavigate function to navigate variable
   const navigate = useNavigate();
+
+  // Navigate to ask page
   const handleAskQuestionClick = () => {
     navigate('ask');
   };

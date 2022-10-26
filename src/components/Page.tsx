@@ -2,8 +2,10 @@
 import { css } from '@emotion/react';
 import React from 'react';
 
+// Components
 import { PageTitle } from './PageTitle';
 
+// Props for component
 interface Props {
   title?: string;
   children: React.ReactNode;

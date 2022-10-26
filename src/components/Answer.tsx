@@ -1,8 +1,11 @@
 /**@jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+
+// Styles and Types
 import { AnswerData } from '../QuestionsData';
 import { gray3 } from '../Styles';
 
+// Prop types for component
 interface Props {
   data: AnswerData;
 }

@@ -1,13 +1,22 @@
 /**@jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+
+// Dependencies
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Page } from '../components/Page';
-import { QuestionList } from '../components/QuestionList';
+
+// Interfaces
 import { QuestionData, searchQuestions } from '../QuestionsData';
 
+// Components
+import { Page } from '../components/Page';
+import { QuestionList } from '../components/QuestionList';
+
 export const SearchPage = () => {
+  // Destructure search parameter object
   const [searchParams] = useSearchParams();
+
+  // Manage questions state
   const [questions, setQuestions] = useState<QuestionData[]>([]);
 
   //Get criteria query
@@ -15,8 +24,10 @@ export const SearchPage = () => {
 
   useEffect(() => {
     const doSearch = async (criteria: string) => {
+      // Call CRUD function
       const foundResults = await searchQuestions(criteria);
 
+      // Update questions data
       setQuestions(foundResults);
     };
 

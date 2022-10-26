@@ -1,4 +1,11 @@
+// Dependencies
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+// CRUD Async functions
+import { postQuestion } from '../QuestionsData';
+
+// Components and Styles
 import { Page } from '../components/Page';
 import {
   FieldContainer,
@@ -9,24 +16,43 @@ import {
   FieldTextArea,
   FormButtonContainer,
   PrimaryButton,
+  SubmissionSuccess,
 } from '../Styles';
 
+// Form data type
 type FormData = {
   title: string;
   content: string;
 };
 
 export const AskPage = () => {
+  // Destructure useful functions and properties from useForm
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    handleSubmit,
   } = useForm<FormData>({ mode: 'onBlur' });
-  // const { ref, name } = register('title');
 
+  // Manage form submission state
+  const [successfullySubmitted, setSuccessfullySubmitted] = useState(false);
+
+  // Form submission handler
+  const submitForm = async (data: FormData) => {
+    // Call CRUD post method and pass in form field values
+    const result = await postQuestion({
+      title: data.title,
+      content: data.content,
+      userName: 'Rastaman',
+      created: new Date(),
+    });
+
+    // Update form submission state
+    setSuccessfullySubmitted(result ? true : false);
+  };
   return (
     <Page title="Ask a question">
-      <form>
-        <Fieldset>
+      <form onSubmit={handleSubmit(submitForm)}>
+        <Fieldset disabled={isSubmitting || successfullySubmitted}>
           <FieldContainer>
             <FieldLabel htmlFor="title">Title</FieldLabel>
             <FieldInput
@@ -59,6 +85,11 @@ export const AskPage = () => {
           <FormButtonContainer>
             <PrimaryButton type="submit">Submit Your Question</PrimaryButton>
           </FormButtonContainer>
+          {successfullySubmitted && (
+            <SubmissionSuccess>
+              Your question was successfully submitted!
+            </SubmissionSuccess>
+          )}
         </Fieldset>
       </form>
     </Page>

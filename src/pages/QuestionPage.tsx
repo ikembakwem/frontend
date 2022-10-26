@@ -1,10 +1,16 @@
 /**@jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { Page } from '../components/Page';
+// Dependencies
 import { useParams } from 'react-router-dom';
-import { getQuestion, QuestionData } from '../QuestionsData';
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+// Interfaces and CRUD functions
+import { getQuestion, postAnswer, QuestionData } from '../QuestionsData';
+
+// Components and Styles
+import { Page } from '../components/Page';
 import {
   FieldContainer,
   FieldError,
@@ -15,35 +21,60 @@ import {
   gray3,
   gray6,
   PrimaryButton,
+  SubmissionSuccess,
 } from '../Styles';
 import { AnswerList } from '../components/AnswerList';
-import { useForm } from 'react-hook-form';
 
+// Type to hold form data
 type FormData = {
   content: string;
 };
 
 export const QuestionPage = () => {
+  // Manage a question state
   const [question, setQuestion] = useState<QuestionData | null>(null);
 
+  // Manage question submission state
+  const [successfullySubmitted, setSuccessFullySubmitted] = useState(false);
+
+  // Destructure question id
   const { questionId } = useParams();
 
   useEffect(() => {
     const doGetQuestions = async (questionId: number) => {
+      // Call CRUD function to find question with id
       const foundQuestion = await getQuestion(questionId);
+
+      // Update question to question with corresponding id
       setQuestion(foundQuestion);
     };
 
+    // Get question id and commence search
     if (questionId) {
       doGetQuestions(Number(questionId));
     }
   }, [questionId]);
 
+  // Destructure useful functions, objects and properties from useForm
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    handleSubmit,
   } = useForm<FormData>({ mode: 'onBlur' });
 
+  // Handle answer submission
+  const submitForm = async (data: FormData) => {
+    // Call CRUD funnction to post answer
+    const result = await postAnswer({
+      questionId: question!.questionId,
+      content: data.content,
+      userName: 'Guru',
+      created: new Date(),
+    });
+
+    // Update answer submission state
+    setSuccessFullySubmitted(result ? true : false);
+  };
   return (
     <Page>
       <div
@@ -87,15 +118,17 @@ export const QuestionPage = () => {
             </div>
             <AnswerList data={question.answers} />
             <form
+              onSubmit={handleSubmit(submitForm)}
               css={css`
                 margin-top: 20px;
               `}
             >
-              <Fieldset>
+              <Fieldset disabled={isSubmitting || successfullySubmitted}>
                 <FieldContainer>
                   <FieldLabel htmlFor="content">Your Answer</FieldLabel>
                   <FieldTextArea
                     id="content"
+                    defaultValue=""
                     {...register('content', { required: true, minLength: 50 })}
                   />
                   {errors.content && errors.content.type === 'minLength' && (
@@ -109,6 +142,11 @@ export const QuestionPage = () => {
                     Submit Your Answer
                   </PrimaryButton>
                 </FormButtonContainer>
+                {successfullySubmitted && (
+                  <SubmissionSuccess>
+                    Your answer has been posted successfully!
+                  </SubmissionSuccess>
+                )}
               </Fieldset>
             </form>
           </React.Fragment>

@@ -7,7 +7,7 @@ import React from 'react';
 // Components
 import { Question } from './Question';
 
-// Props
+// Styles, types and interfaces
 import { QuestionData } from '../QuestionsData';
 import { accent2, gray5 } from '../Styles';
 

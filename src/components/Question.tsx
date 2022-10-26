@@ -2,10 +2,11 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-// Question Data Props
+// Styles and interfaces
 import { QuestionData } from '../QuestionsData';
 import { gray2, gray3 } from '../Styles';
 
+// Props for component
 interface Props {
   data: QuestionData;
   showContent?: boolean;

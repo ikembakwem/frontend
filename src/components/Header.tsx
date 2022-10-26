@@ -1,30 +1,41 @@
 // Configuring emotion styles
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { constants } from 'fs/promises';
 
 // Dependencies
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-// Components
+// Components and Styles
 import { FaUserAlt as UserIcon } from 'react-icons/fa';
-import { Link, useSearchParams } from 'react-router-dom';
 import { fontFamily, fontSize, gray1, gray2, gray5 } from '../Styles';
 
+// Form data structure
 type FormData = {
   search: string;
 };
 
 export const Header = () => {
-  const { register } = useForm<FormData>();
+  // Destructure register and handleSubmit hook
+  const { register, handleSubmit } = useForm<FormData>();
+
+  // Destructure search parameters
   const [searchParams] = useSearchParams();
 
-  // const { ref, name } = register('search');
+  // Assign criteria search parameter to criteria variable
   const criteria = searchParams.get('criteria') || '';
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Assign useNavigate function to navigate variable
+  const navigate = useNavigate();
+
+  // Handle search form submission, initiate search and navigate to search page
+  const submitForm = ({ search }: FormData) => {
+    // Navigate to search page and assign search parameter to criteria
+    navigate(`search?criteria=${search}`);
   };
+
   return (
     <div
       css={css`
@@ -52,7 +63,7 @@ export const Header = () => {
       >
         Q & A
       </Link>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(submitForm)}>
         <input
           {...register('search')}
           type="text"

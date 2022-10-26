@@ -1,9 +1,14 @@
 /**@jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+
+// Styles and Types
 import { AnswerData } from '../QuestionsData';
 import { gray5 } from '../Styles';
+
+// Components
 import { Answer } from './Answer';
 
+// Props for component
 interface Props {
   data: AnswerData[];
 }
