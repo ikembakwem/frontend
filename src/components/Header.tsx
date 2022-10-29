@@ -1,7 +1,6 @@
 // Configuring emotion styles
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { constants } from 'fs/promises';
 
 // Dependencies
 import React from 'react';
