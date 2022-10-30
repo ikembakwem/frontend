@@ -2,12 +2,11 @@
 import { css } from '@emotion/react';
 
 // Dependencies
-import { useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
-// Interfaces and CRUD functions
-import { getQuestion, postAnswer, QuestionData } from '../QuestionsData';
+// Types
+import { FormData } from '../QuestionsData';
 
 // Components and Styles
 import { Page } from '../components/Page';
@@ -24,37 +23,9 @@ import {
   SubmissionSuccess,
 } from '../Styles';
 import { AnswerList } from '../components/AnswerList';
-
-// Type to hold form data
-type FormData = {
-  content: string;
-};
+import useQuestion from '../hooks/use-question';
 
 export const QuestionPage = () => {
-  // Manage a question state
-  const [question, setQuestion] = useState<QuestionData | null>(null);
-
-  // Manage question submission state
-  const [successfullySubmitted, setSuccessFullySubmitted] = useState(false);
-
-  // Destructure question id
-  const { questionId } = useParams();
-
-  useEffect(() => {
-    const doGetQuestions = async (questionId: number) => {
-      // Call CRUD function to find question with id
-      const foundQuestion = await getQuestion(questionId);
-
-      // Update question to question with corresponding id
-      setQuestion(foundQuestion);
-    };
-
-    // Get question id and commence search
-    if (questionId) {
-      doGetQuestions(Number(questionId));
-    }
-  }, [questionId]);
-
   // Destructure useful functions, objects and properties from useForm
   const {
     register,
@@ -62,19 +33,8 @@ export const QuestionPage = () => {
     handleSubmit,
   } = useForm<FormData>({ mode: 'onBlur' });
 
-  // Handle answer submission
-  const submitForm = async (data: FormData) => {
-    // Call CRUD funnction to post answer
-    const result = await postAnswer({
-      questionId: question!.questionId,
-      content: data.content,
-      userName: 'Guru',
-      created: new Date(),
-    });
+  const { question, submitAnswer, isAnswerSubmitted } = useQuestion();
 
-    // Update answer submission state
-    setSuccessFullySubmitted(result ? true : false);
-  };
   return (
     <Page>
       <div
@@ -118,12 +78,12 @@ export const QuestionPage = () => {
             </div>
             <AnswerList data={question.answers} />
             <form
-              onSubmit={handleSubmit(submitForm)}
+              onSubmit={handleSubmit(submitAnswer)}
               css={css`
                 margin-top: 20px;
               `}
             >
-              <Fieldset disabled={isSubmitting || successfullySubmitted}>
+              <Fieldset disabled={isSubmitting || isAnswerSubmitted}>
                 <FieldContainer>
                   <FieldLabel htmlFor="content">Your Answer</FieldLabel>
                   <FieldTextArea
@@ -142,7 +102,7 @@ export const QuestionPage = () => {
                     Submit Your Answer
                   </PrimaryButton>
                 </FormButtonContainer>
-                {successfullySubmitted && (
+                {isAnswerSubmitted && (
                   <SubmissionSuccess>
                     Your answer has been posted successfully!
                   </SubmissionSuccess>
