@@ -1,4 +1,4 @@
-// Interfaces
+// Types
 
 export interface QuestionData {
   questionId: number;
@@ -29,6 +29,12 @@ export interface PostAnswerData {
   userName: string;
   created: Date;
 }
+
+// Form data type
+export type FormData = {
+  title: string;
+  content: string;
+};
 
 // Temporary questions data
 

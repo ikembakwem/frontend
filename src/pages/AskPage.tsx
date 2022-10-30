@@ -1,9 +1,8 @@
 // Dependencies
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-// CRUD Async functions
-import { postQuestion } from '../QuestionsData';
+// Types
+import { FormData } from '../QuestionsData';
 
 // Components and Styles
 import { Page } from '../components/Page';
@@ -19,11 +18,8 @@ import {
   SubmissionSuccess,
 } from '../Styles';
 
-// Form data type
-type FormData = {
-  title: string;
-  content: string;
-};
+// Hooks
+import useAskQuestion from '../hooks/use-ask-question';
 
 export const AskPage = () => {
   // Destructure useful functions and properties from useForm
@@ -33,26 +29,12 @@ export const AskPage = () => {
     handleSubmit,
   } = useForm<FormData>({ mode: 'onBlur' });
 
-  // Manage form submission state
-  const [successfullySubmitted, setSuccessfullySubmitted] = useState(false);
+  const { isQuestionSubmitted, submitQuestion } = useAskQuestion();
 
-  // Form submission handler
-  const submitForm = async (data: FormData) => {
-    // Call CRUD post method and pass in form field values
-    const result = await postQuestion({
-      title: data.title,
-      content: data.content,
-      userName: 'Rastaman',
-      created: new Date(),
-    });
-
-    // Update form submission state
-    setSuccessfullySubmitted(result ? true : false);
-  };
   return (
     <Page title="Ask a question">
-      <form onSubmit={handleSubmit(submitForm)}>
-        <Fieldset disabled={isSubmitting || successfullySubmitted}>
+      <form onSubmit={handleSubmit(submitQuestion)}>
+        <Fieldset disabled={isSubmitting || isQuestionSubmitted}>
           <FieldContainer>
             <FieldLabel htmlFor="title">Title</FieldLabel>
             <FieldInput
@@ -85,7 +67,7 @@ export const AskPage = () => {
           <FormButtonContainer>
             <PrimaryButton type="submit">Submit Your Question</PrimaryButton>
           </FormButtonContainer>
-          {successfullySubmitted && (
+          {isQuestionSubmitted && (
             <SubmissionSuccess>
               Your question was successfully submitted!
             </SubmissionSuccess>
