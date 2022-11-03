@@ -2,41 +2,18 @@
 import { css } from '@emotion/react';
 
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-// CRUD functions and interface
-import { getUnansweredQuestions, QuestionData } from '../QuestionsData';
 
 // Components and Styles
 import { QuestionList } from '../components/QuestionList';
 import { Page } from '../components/Page';
 import { PageTitle } from '../components/PageTitle';
 import { PrimaryButton } from '../Styles';
+import useQuestions from '../hooks/use-questions';
 
 export const HomePage = () => {
-  // Manage questions state
-  const [questions, setQuestions] = useState<QuestionData[]>([]);
-
-  // Manage Question loading state
-  const [questionsLoading, setQuestionsLoading] = useState(true);
-
-  useEffect(() => {
-    const doGetUnansweredQuestions = async () => {
-      // Call async CRUD function
-      const unansweredQuestions = await getUnansweredQuestions();
-
-      // Update questions data
-      setQuestions(unansweredQuestions);
-
-      // Update question loading state
-      setQuestionsLoading(false);
-    };
-
-    // Call the API
-    doGetUnansweredQuestions();
-  }, []);
-
+  const { questions, questionsLoading } = useQuestions();
   // Assign useNavigate function to navigate variable
   const navigate = useNavigate();
 
